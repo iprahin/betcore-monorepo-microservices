@@ -1,17 +1,16 @@
+# dependencies
+node_modules/
+**/node_modules/
+
 # compiled output
-/dist
-/node_modules
-/build
-apps/api/node_modules/
-apps/line-worker/node_modules/
-apps/api/dist/
-apps/line-worker/dist/
-packages/contracts/dist/
-packages/domain/dist/
+dist/
+**/dist/
+build/
+**/build/
+*.tsbuildinfo
 
-
-# Logs
-logs
+# logs
+logs/
 *.log
 npm-debug.log*
 pnpm-debug.log*
@@ -21,41 +20,40 @@ lerna-debug.log*
 
 # OS
 .DS_Store
+Thumbs.db
 
-# Tests
-/coverage
-/.nyc_output
+# tests
+coverage/
+**/coverage/
+.nyc_output/
 
 # IDEs and editors
-/.idea
+.idea/
+*.code-workspace
+*.sublime-workspace
 .project
 .classpath
 .c9/
 *.launch
 .settings/
-*.sublime-workspace
-.editorconfig
-*.code-workspace
-
 
 # dotenv environment variable files
 .env
-.env.development.local
-.env.test.local
-.env.test
-.env.production.local
-.env.local
-.env.docker
+.env.*
+!.env.example
+!.env.docker.example
 
-# temp directory
-.temp
-.tmp
+# temp/cache
+.temp/
+.tmp/
+.cache/
+.turbo/
 
-# Runtime data
-pids
+# runtime data
+pids/
 *.pid
 *.seed
 *.pid.lock
 
-# Diagnostic reports (https://nodejs.org/api/report.html)
+# diagnostic reports
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

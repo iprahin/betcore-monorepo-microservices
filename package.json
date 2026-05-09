@@ -13,7 +13,13 @@
 		"build:domain": "pnpm --filter @betcore/domain build",
 		"build:api": "pnpm --filter @betcore/api build",
 		"build:line-worker": "pnpm --filter @betcore/line-worker build",
-		"build": "pnpm build:contracts && pnpm build:domain && pnpm build:api && pnpm build:line-worker"
+		"build": "pnpm build:contracts && pnpm build:domain && pnpm build:api && pnpm build:line-worker",
+		"check": "pnpm format:check && pnpm lint && pnpm build",
+		"docker:build": "docker compose build",
+		"docker:up": "docker compose up",
+		"docker:down": "docker compose down",
+		"docker:check": "docker compose up -d --build && pnpm health:check",
+		"health:check": "node scripts/health-check.mjs"
 	},
 	"keywords": [],
 	"author": "",

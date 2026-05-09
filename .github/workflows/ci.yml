@@ -1,0 +1,64 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - main
+            - master
+    pull_request:
+
+jobs:
+    check:
+        name: Lint, build and Docker smoke test
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Enable Corepack
+              run: corepack enable
+
+            - name: Prepare pnpm
+              run: corepack prepare pnpm@10.33.0 --activate
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: pnpm
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Check formatting
+              run: pnpm format:check
+
+            - name: Lint
+              run: pnpm lint
+
+            - name: Build
+              run: pnpm build
+
+            - name: Prepare env file
+              run: cp .env.example .env
+
+            - name: Build Docker images
+              run: docker compose build
+
+            - name: Start Docker Compose
+              run: docker compose up -d
+
+            - name: Show containers
+              run: docker compose ps
+
+            - name: Check health endpoints
+              run: pnpm health:check
+
+            - name: Show logs on failure
+              if: failure()
+              run: docker compose logs --tail=300
+
+            - name: Stop Docker Compose
+              if: always()
+              run: docker compose down -v
